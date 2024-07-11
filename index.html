@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Random Gradient Generator - Shozn Roy</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"><meta name="description" content="Generate random gradients with this web application. Copy the generated CSS code for use in your projects."><meta name="keywords" content="gradient generator, CSS gradient, web development, random gradients, HTML, CSS, JavaScript"><meta name="author" content="Shozon Roy"><meta property="og:title" content="Gradient Generator"><meta property="og:description" content="Generate random gradients with this web application. Copy the generated CSS code for use in your projects."><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Random Gradient Generator"><meta name="twitter:description" content="Generate random gradients with this web application. Copy the generated CSS code for use in your projects."><style>body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background:linear-gradient(to right,#6a11cb,#2575fc);background-size:400% 400%;animation:gradient 15s ease infinite}@keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}.container{position:relative;text-align:center;background:rgba(255,255,255,.9);padding:30px;border-radius:15px;box-shadow:0 4px 20px rgba(0,0,0,.1);max-width:600px;width:90%;margin:20px}.social-icons{position:absolute;top:10px;left:10px;display:flex;gap:10px}.social-icons a{color:#333;text-decoration:none;font-size:24px;transition:color .3s ease}.social-icons a:hover{color:#2575fc}.container h2{font-size:24px;margin-bottom:20px;color:#333}.buttons{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}button{padding:12px 24px;font-size:16px;cursor:pointer;border:none;border-radius:5px;transition:background-color .3s ease;display:flex;align-items:center;justify-content:center;background-color:#4caf50;color:#fff}button i{margin-right:8px}button.random{background-color:#6a11cb}button.copy{background-color:#2575fc}button:hover{opacity:.8}textarea{width:100%;height:100px;font-size:14px;border:1px solid #ccc;border-radius:5px;padding:10px;resize:none;margin-top:10px;box-sizing:border-box}@media (max-width:768px){.container{padding:20px;width:100%}button{font-size:14px;padding:10px 20px}textarea{font-size:12px;height:80px}.social-icons a{font-size:20px}}@media (max-width:480px){.container{padding:15px}button{font-size:12px;padding:8px 16px}textarea{font-size:12px;height:60px}.social-icons a{font-size:18px}}</style></head><body><div class="container"><div class="social-icons"><a href="https://www.facebook.com/shozon.roy2" target="_blank"><i class="fab fa-facebook"></i></a><a href="https://www.instagram.com/shozon_roy" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://t.me/shozonroy2" target="_blank"><i class="fab fa-telegram"></i></a><a href="https://github.com/Shozon-Roy" target="_blank"><i class="fab fa-github"></i></a><a href="https://shozonroy.blogspot.com" target="_blank"><i class="fas fa-globe"></i></a></div><h2>Gradient Generator</h2><div class="buttons"><button class="random"><i class="fas fa-random"></i>Random Gradient</button><button class="copy"><i class="fas fa-copy"></i>Copy CSS</button></div><textarea readonly="readonly"></textarea></div><script>const randomButton = document.querySelector(".random");
+    const copyButton = document.querySelector(".copy");
+    const textarea = document.querySelector("textarea");
+
+    let style = "";
+
+    const blendModes = [
+      "normal",
+      "multiply",
+      "screen",
+      "overlay",
+      "lighten",
+      "hard-light",
+      "soft-light",
+      "hue",
+      "color"
+    ];
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function generateGradient() {
+      let gradient = "";
+      let mode = "";
+      for (let i = 0; i < 4; i++) {
+        const deg = Math.floor(Math.random() * 180);
+        const firstColor = getRandomColor();
+        const lastColor = getRandomColor();
+        const firstSpread = Math.floor(Math.random() * 90);
+        const lastSpread = Math.floor(Math.random() * 180);
+        mode += `${blendModes[Math.floor(Math.random() * blendModes.length)]},`;
+        gradient += `linear-gradient(${deg}deg, ${firstColor} ${firstSpread}%, ${lastColor} ${lastSpread}%),`;
+      }
+
+      style = `background-image: ${gradient.slice(0, -1)}; background-blend-mode: ${mode.slice(0, -1)};`;
+      document.body.style = style;
+      textarea.value = `body {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  margin: 0;\n  ${style}\n  background-size: 400% 400%;\n  animation: gradient 15s ease infinite;\n}\n\n@keyframes gradient {\n  0% { background-position: 0% 50%; }\n  50% { background-position: 100% 50%; }\n  100% { background-position: 0% 50%; }\n}`;
+    }
+
+    randomButton.addEventListener("click", generateGradient);
+
+    copyButton.addEventListener("click", () => {
+      textarea.select();
+      document.execCommand('copy');
+      copyButton.innerHTML = '<i class="fas fa-copy"></i> Copied';
+      setTimeout(() => {
+        copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy CSS';
+      }, 1000);
+    });
+
+    // Set an initial random gradient on page load
+    generateGradient();</script></body></html>

@@ -1,4 +1,4 @@
-# Gradient Generator
+# Random Gradient Generator
 
 This web application generates random gradients using HTML, CSS, and JavaScript. It allows users to copy the generated CSS code for the gradient.
 
